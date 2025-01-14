@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
-
-const userSchema = new mongoose.Schema({
+const captainSchema = new mongoose.Schema({
   name: {
     required: true,
     type: String,
@@ -12,18 +11,25 @@ const userSchema = new mongoose.Schema({
     unique: true,
     lowercase: true,
   },
+
   password: {
     type: String,
     required: true,
+    select: false,
   },
+
   phoneNumber: {
     type: Number,
     length: 10,
   },
-  socketId: {
+
+  status: {
     type: String,
+    enum: ["active", "inactive"],
+    default: "inactive",
   },
+  socketId: { type: String },
 });
 
-const User = mongoose.model("user", userSchema);
-module.exports = User;
+const Captain = mongoose.model("CaptainUser", captainSchema);
+module.exports = Captain;
