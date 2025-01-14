@@ -61,20 +61,27 @@ async function logInHandle(req, res) {
 }
 
 //profileHandler
-const profileHandler = (req, res) => {};
+const profileHandler = (req, res) => {
+  return res.status(200).json({ msg: "successful" });
+};
 
-//logout
+//logout //used for both user controller and captain controller as well
 const logOutHandler = async (req, res) => {
   try {
     const token = req.headers.authorization?.split(" ")[1] || req.cookies.token;
 
-    const blacklistToken = await blacklistedToken.create({ token });
-    console.log(blacklistToken);
-    req.clearCookie("token");
+    await blacklistedToken.create({ token });
+    res.clearCookie("token", token);
     res.status(200).json({ msg: "log out successfully" });
   } catch (error) {
+    console.log(error);
     res.status(400).json({ msg: "something went wrong" });
   }
 };
 
-module.exports = { userRegistration, logInHandle, logOutHandler };
+module.exports = {
+  userRegistration,
+  logInHandle,
+  logOutHandler,
+  profileHandler,
+};

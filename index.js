@@ -13,7 +13,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use("/users", router);
+app.use("/user", router);
 app.use("/captain", captainRouter);
 
 app.listen(port, () => {
