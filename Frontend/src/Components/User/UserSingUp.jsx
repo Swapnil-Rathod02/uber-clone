@@ -10,11 +10,16 @@ function UserSingUp() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const user = { userName, email, password };
+<<<<<<< HEAD
     const response = await axios.post(
       `${import.meta.env.VITE_BASE_URL}/user/signin`,
       user
     );
 
+=======
+    const response=await axios.post(`${import.meta.env.VITE_BASE_URL}/user/signin`,user)
+    
+>>>>>>> 12dbb8290482a1bebad85fd4a47563be7ada444d
     setEmail("");
     setUserName("");
     setPassword("");
