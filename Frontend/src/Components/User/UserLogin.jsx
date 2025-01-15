@@ -4,12 +4,11 @@ import { Link } from "react-router-dom";
 const UserLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [userData, setUserData] = useState({});
 
   const submitHandler = (e) => {
     e.preventDefault();
-    setUserData({ email: email, password: password });
-    console.log(userData);
+    const userDetail = { email: email, password: password };
+    console.log(userDetail);
     setEmail("");
     setPassword("");
   };
@@ -68,7 +67,7 @@ const UserLogin = () => {
 
         <button className="mt-5 w-full">
           <Link
-            to="/captain_login"
+            to="/captainlogin"
             className="w-full  bg-amber-200 text-xl text-white p-1 rounded-md text-center mt-2"
           >
             Log in as Captain User
