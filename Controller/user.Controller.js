@@ -22,10 +22,12 @@ async function userRegistration(req, res) {
       email: email,
       password: hashPassword,
     });
-
+    const token = setToken({ userData });
+    res.cookie("token", token);
     return res.status(201).json({
       status: "successfull",
       userData: userData,
+      token,
     });
   } catch (error) {
     res.status(404).json({ msg: "something went wrong" });
