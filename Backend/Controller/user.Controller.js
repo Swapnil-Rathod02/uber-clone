@@ -3,6 +3,7 @@ const User = require("../Model/User.model");
 const blacklistedToken = require("../Model/BlacklistedToken.Model");
 const bycrpt = require("bcrypt");
 const { setToken } = require("../Helpers/jsonToken");
+const { set } = require("mongoose");
 
 async function userRegistration(req, res) {
   const errors = validationResult(req);
@@ -49,11 +50,10 @@ async function logInHandle(req, res) {
     const isMatched = await bycrpt.compare(password, user.password);
     if (isMatched) {
       const token = setToken({ user: user.password });
-
-      console.log(user);
+      res.cookie("token", token);
       return res.status(201).json({
         type: "Bearer",
-        token: `bearer ${token}`,
+        token,
         user,
       });
     }

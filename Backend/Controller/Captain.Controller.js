@@ -26,9 +26,7 @@ const registerHandler = async (req, res) => {
     });
     const token = setToken({ captainUser });
     res.cookie("token", token);
-    return res
-      .status(200)
-      .json({ msg: "successfull", captainUser, token: `bearer ${token}` });
+    return res.status(200).json({ msg: "successfull", captainUser, token });
   } catch (error) {
     console.log(error);
     return res.status(400).json({ error });
@@ -51,14 +49,14 @@ const loginHandler = async (req, res) => {
     res.cookie("token", token);
     return res
       .status(200)
-      .json({ msg: "Login successful", captainUser, token: `bearer ${token}` });
+      .json({ msg: "Login successful", captainUser, token });
   } catch (error) {
     return res.status(400).json({ error });
   }
 };
 
 const captainProfileHandler = (req, res) => {
-  res.status(200).json({ msg: "user data" });
+  res.status(200).json({ msg: "user data", captainUser: req.user });
 };
 
 module.exports = { registerHandler, loginHandler, captainProfileHandler };
