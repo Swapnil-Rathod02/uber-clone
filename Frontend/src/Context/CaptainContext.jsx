@@ -1,6 +1,6 @@
 import { createContext, useState } from "react";
 
-const CaptainContex = createContext({});
+export const CaptainContex = createContext({});
 
 const CaptainContexProvider = ({ children }) => {
   const [captain, setCaptain] = useState({});

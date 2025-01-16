@@ -7,6 +7,8 @@ import Hero from "./Components/Hero";
 import Home from "./Components/Home/Home";
 import CaptainRegistration from "./Components/User/CaptainRegistration";
 import UserWrappper from "./Components/UserWrappper";
+import HomeCaptain from "./Components/Captain/Home.Captain";
+import CaptainWrapper from "./Components/Captain/CaptainWrapper";
 
 function App() {
   return (
@@ -25,6 +27,14 @@ function App() {
         <Route path="/signup" element={<UserSingUp />} />
         <Route path="/registration" element={<CaptainRegistration />} />
         <Route path="/captainlogin" element={<CaptainUserlogin />} />
+        <Route
+          path="/captain-home"
+          element={
+            <CaptainWrapper>
+              <HomeCaptain />
+            </CaptainWrapper>
+          }
+        />
       </Routes>
     </>
   );

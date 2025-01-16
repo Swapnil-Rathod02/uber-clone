@@ -19,7 +19,7 @@ const UserLogin = () => {
     );
 
     if (response.status == 201) {
-      setUserData(response.data);
+      setUserData(response.data.user);
       localStorage.setItem("token", response.data.token);
       navigate("/");
     }

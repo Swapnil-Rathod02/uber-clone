@@ -1,6 +1,7 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { Link, redirect, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { CaptainContex } from "../../Context/CaptainContext";
 
 function CaptainRegistration() {
   const [email, setEmail] = useState("");
@@ -9,6 +10,8 @@ function CaptainRegistration() {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [vehicleNumber, setVehicleNumber] = useState("");
   const [vehicleType, setVehicleType] = useState("");
+  const navigate = useNavigate();
+  const { captain, setCaptain } = useContext(CaptainContex);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -27,6 +30,12 @@ function CaptainRegistration() {
       captainUser
     );
     console.log(response.data);
+    if (response.status == 200) {
+      setCaptain(response.data.captainUser);
+      localStorage.setItem("token", response.data.token);
+
+      navigate("/captain-home");
+    }
 
     // setEmail("");
     // setUserName("");
