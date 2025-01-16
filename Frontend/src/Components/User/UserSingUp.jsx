@@ -1,25 +1,28 @@
 import axios from "axios";
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { UserDataContext } from "../../Context/UserContext";
 
 function UserSingUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [userName, setUserName] = useState("");
+  const navigate = useNavigate();
+  const { userData, setUserData } = useContext(UserDataContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const user = { userName, email, password };
-<<<<<<< HEAD
     const response = await axios.post(
       `${import.meta.env.VITE_BASE_URL}/user/signin`,
       user
     );
+    console.log(response.data);
+    if (response.status == 201) {
+      setUserData(response.data.userData);
+      navigate("/", { relative: true });
+    }
 
-=======
-    const response=await axios.post(`${import.meta.env.VITE_BASE_URL}/user/signin`,user)
-    
->>>>>>> 12dbb8290482a1bebad85fd4a47563be7ada444d
     setEmail("");
     setUserName("");
     setPassword("");

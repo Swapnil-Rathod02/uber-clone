@@ -7,18 +7,18 @@ const { setToken } = require("../Helpers/jsonToken");
 async function userRegistration(req, res) {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
+    console.log(errors);
     return res.send(errors);
   }
 
   try {
-    const { name, email, password } = req.body;
+    const { userName, email, password } = req.body;
     const isExist = await User.findOne({ email: email });
     if (isExist) return res.json({ status: "failed", msg: "Already exist" });
 
     const hashPassword = await bycrpt.hash(password, 10);
-
     const userData = await User.create({
-      name: name,
+      name: userName,
       email: email,
       password: hashPassword,
     });
@@ -49,8 +49,9 @@ async function logInHandle(req, res) {
     const isMatched = await bycrpt.compare(password, user.password);
     if (isMatched) {
       const token = setToken({ user: user.password });
-      res.cookie("token", token);
-      return res.status(200).json({
+
+      console.log(user);
+      return res.status(201).json({
         type: "Bearer",
         token: `bearer ${token}`,
         user,

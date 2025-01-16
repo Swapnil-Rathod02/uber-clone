@@ -4,8 +4,6 @@ import { IoTime } from "react-icons/io5";
 import { UserDataContext } from "../../Context/UserContext";
 
 function Input() {
-  const user = useContext(UserDataContext);
-  console.log(user);
   return (
     <div
       id="input"
