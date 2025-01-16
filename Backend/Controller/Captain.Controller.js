@@ -11,15 +11,18 @@ const registerHandler = async (req, res) => {
   }
 
   try {
-    const { name, email, phoneNumber, password } = req.body;
-    console.log(name, email, phoneNumber, password);
+    const { userName, email, phoneNumber, vehicleDetail, password } = req.body;
 
     const hashPassword = await bcrypt.hash(password, 10);
     const captainUser = await Captain.create({
-      name,
+      name: userName,
       email,
       phoneNumber,
       password: hashPassword,
+      vehicleDetail: {
+        vehicleType: vehicleDetail.vehicleType,
+        vehicleNumber: vehicleDetail.vehicleNumber,
+      },
     });
     const token = setToken({ captainUser });
     res.cookie("token", token);
@@ -27,6 +30,7 @@ const registerHandler = async (req, res) => {
       .status(200)
       .json({ msg: "successfull", captainUser, token: `bearer ${token}` });
   } catch (error) {
+    console.log(error);
     return res.status(400).json({ error });
   }
 };
@@ -49,7 +53,6 @@ const loginHandler = async (req, res) => {
       .status(200)
       .json({ msg: "Login successful", captainUser, token: `bearer ${token}` });
   } catch (error) {
-    console.log(error);
     return res.status(400).json({ error });
   }
 };

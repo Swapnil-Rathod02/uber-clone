@@ -2,7 +2,7 @@ const express = require("express");
 const {
   registerHandler,
   loginHandler,
-  profileHandler,
+
   captainProfileHandler,
 } = require("../Controller/captain.Controller");
 const { captainRegistration, captainLogin } = require("../Helpers/validators");

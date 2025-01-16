@@ -22,7 +22,16 @@ const captainSchema = new mongoose.Schema({
     type: Number,
     length: 10,
   },
-
+  vehicleDetail: {
+    vehicleType: {
+      type: String,
+      require: true,
+    },
+    vehicleNumber: {
+      type: String,
+      require: true,
+    },
+  },
   status: {
     type: String,
     enum: ["active", "inactive"],
