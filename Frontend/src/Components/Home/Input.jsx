@@ -2,8 +2,10 @@ import React, { useContext } from "react";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import { IoTime } from "react-icons/io5";
 import { UserDataContext } from "../../Context/UserContext";
+import { Link, useNavigate } from "react-router-dom";
 
 function Input() {
+  const navigate = useNavigate();
   return (
     <div
       id="input"
@@ -14,6 +16,9 @@ function Input() {
         className="border-none focus:outline-none bg-transparent text-black text-xl font-medium p-1 placeholder:text-black"
         type="text"
         placeholder="Enter pickup point"
+        onClick={() => {
+          navigate("/user/searching");
+        }}
       />
       <div className="flex justify-between rounded-full content-center  bg-transparent box-border p-1 w-32 ">
         <IoTime className="size-8" />

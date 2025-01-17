@@ -2,13 +2,17 @@ import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import UserLogin from "./Components/User/UserLogin";
 import UserSingUp from "./Components/User/UserSingUp";
-import CaptainUserlogin from "./Components/User/CaptainUserLogin";
+import CaptainUserlogin from "./Components/Captain/CaptainUserLogin";
 import Hero from "./Components/Hero";
 import Home from "./Components/Home/Home";
-import CaptainRegistration from "./Components/User/CaptainRegistration";
-import UserWrappper from "./Components/UserWrappper";
+import CaptainRegistration from "./Components/Captain/CaptainRegistration";
+
 import HomeCaptain from "./Components/Captain/Home.Captain";
 import CaptainWrapper from "./Components/Captain/CaptainWrapper";
+import UserWrappper from "./Components/User/UserWrappper";
+
+import VehicalDetails from "./Components/Booking/VehicleDetails";
+import Booking from "./Components/Booking/Booking";
 
 function App() {
   return (
@@ -25,6 +29,8 @@ function App() {
         />
         <Route path="/login" element={<UserLogin />} />
         <Route path="/signup" element={<UserSingUp />} />
+        <Route path="/user/booking" element={<Booking />} />
+
         <Route path="/registration" element={<CaptainRegistration />} />
         <Route path="/captainlogin" element={<CaptainUserlogin />} />
         <Route

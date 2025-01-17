@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useReducer } from "react";
-import { UserDataContext } from "../Context/UserContext";
+import { UserDataContext } from "../../Context/UserContext";
 import { useNavigate } from "react-router-dom";
 
 function UserWrappper({ children }) {
