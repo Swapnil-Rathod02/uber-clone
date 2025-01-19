@@ -11,7 +11,6 @@ import HomeCaptain from "./Components/Captain/Home.Captain";
 import CaptainWrapper from "./Components/Captain/CaptainWrapper";
 import UserWrappper from "./Components/User/UserWrappper";
 
-import VehicalDetails from "./Components/Booking/VehicleDetails";
 import Booking from "./Components/Booking/Booking";
 
 function App() {

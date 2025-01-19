@@ -13,7 +13,7 @@ const isAuthenticated = async (req, res, next) => {
     }
     const userDatail = getTokenToInfo(token);
 
-    req.user = userDatail;
+    req.user = userDatail.user;
   } catch (error) {
     return res.status(401).json({ msg: "bad request" });
   }

@@ -49,7 +49,7 @@ async function logInHandle(req, res) {
 
     const isMatched = await bycrpt.compare(password, user.password);
     if (isMatched) {
-      const token = setToken({ user: user.password });
+      const token = setToken({ user });
       res.cookie("token", token);
       return res.status(201).json({
         type: "Bearer",

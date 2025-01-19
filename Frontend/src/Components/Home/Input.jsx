@@ -17,7 +17,7 @@ function Input() {
         type="text"
         placeholder="Enter pickup point"
         onClick={() => {
-          navigate("/user/searching");
+          navigate("/user/booking");
         }}
       />
       <div className="flex justify-between rounded-full content-center  bg-transparent box-border p-1 w-32 ">

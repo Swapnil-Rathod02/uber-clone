@@ -7,7 +7,7 @@ const VehicalType = ({ cab }) => {
   return (
     <>
       <div
-        className={`w-full absolute bottom-0 z-10 bg-white p-2 box-border ${
+        className={`w-full absolute bottom-0 z-10 bg-white p-2 box-border transition-all transform duration-300 ${
           cab ? "visible" : "hidden"
         }
         ${select ? "hidden" : "visible"}

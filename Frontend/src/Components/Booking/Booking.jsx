@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FaAngleDown } from "react-icons/fa6";
 import DriverConfirm from "./DriverConfirm";
-import VehicalType from "./VehicleDetails";
+import VehicalType from "./VehicleType";
 import VehiclePanel from "./VehiclePanel";
 
 const Booking = () => {
@@ -22,17 +22,14 @@ const Booking = () => {
         />
       </div>
       <div
-        className={`  z-50 bg-white w-full   ${
-          focus ? "absolute bottom-0 " : "relative"
-        } ${cab ? "hidden" : "visible"}`}
+        className={`  z-50 bg-white w-full  
+        ${focus ? "absolute bottom-0  " : "relative "} ${
+          cab ? "hidden" : "visible"
+        }`}
       >
-        <div
-          className={` p-2 z-50 bg-white   ${
-            focus ? "absolute bottom-0 " : "relative"
-          }`}
-        >
+        <div className={` p-4 z-50 bg-white/75  `}>
           <div className="flex justify-between p-2">
-            <h1 className="text-xl font-semibold ">Find Trip</h1>
+            <h1 className="text-3xl font-bold ">Find Trip</h1>
             <FaAngleDown
               className={`size-8  focus:rotate-180 ${
                 focus ? "rotate-180" : null
@@ -40,23 +37,27 @@ const Booking = () => {
               onClick={() => setFocus((prev) => !prev)}
             />
           </div>
-          <form action="" className="p-2">
+          <form action="" className="p-2 pb-0">
             <input
               type="text"
-              className="p-2 focus:border-none w-full placeholder:text-black/55 font-medium items-center"
+              className="p-2 focus:border-none w-full placeholder:text-black/55 placeholder:text-xl text-xl font-medium items-center mb-8 bg-gray-500 rounded-md h-12"
               placeholder="Enter pickup location "
               onFocus={() => setFocus(false)}
             />
 
             <input
               type="text"
-              className="p-2 focus:border-none w-full placeholder:text-black/55 font-medium items-center"
+              className="p-2 h-12  rounded-md  text-xl placeholder:text-xl focus:border-none bg-gray-500 w-full placeholder:text-black/55 font-medium items-center"
               placeholder="choose current location "
             />
           </form>
         </div>
+
+        {/* will be showed on loops result */}
         <div
-          className={`bg-red-600 px-2 rounded-b-md  ${focus ? "hidden" : null}`}
+          className={`bg-red-600 p-2 rounded-b-md  ${
+            focus ? "hidden" : "null"
+          }`}
           onClick={() => setCab(true)}
         >
           red

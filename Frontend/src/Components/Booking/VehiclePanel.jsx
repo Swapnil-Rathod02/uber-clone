@@ -53,7 +53,7 @@ const VehiclePanel = ({ select }) => {
           Confirm
         </button>
       </div>
-      <DriverConfirm confirm={confirm} />
+      {/* <DriverConfirm confirm={confirm} /> */}
     </>
   );
 };
