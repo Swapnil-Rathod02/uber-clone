@@ -1,8 +1,9 @@
 const Ride = require("../Model/Ride.Model");
 const { getTimeAndDistance } = require("./Map.Service");
 const crypto = require("crypto");
+
 //get time and distance
-const timeAndDistance = async (pickup, destination) => {
+const vehicleFare = async (pickup, destination) => {
   if (!pickup || !destination) {
     throw new Error("Please provide both pickup and destination");
   }
@@ -40,7 +41,7 @@ const createRide = async ({ user, pickup, destination, vehichleType }) => {
     throw new Error("Please provide all the required fields");
   }
   try {
-    const fare = await timeAndDistance(pickup, destination);
+    const fare = await vehicleFare(pickup, destination);
 
     const rideId = Math.floor(Math.random() * 1000000);
     const ride = await Ride.create({
@@ -57,4 +58,4 @@ const createRide = async ({ user, pickup, destination, vehichleType }) => {
     throw new Error(error.message);
   }
 };
-module.exports = { createRide };
+module.exports = { createRide, vehicleFare };

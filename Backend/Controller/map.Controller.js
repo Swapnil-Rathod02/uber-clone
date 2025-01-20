@@ -39,7 +39,7 @@ const getDistanceAndeTimeController = async (req, res) => {
 const suggestionsController = async (req, res) => {
   const error = validationResult(req);
   if (!error.isEmpty()) {
-    return res.status(400).json({ error: error.array() });
+    return res.status(400).json({ error: "getting error for validtions" });
   }
   const { input } = req.query;
   try {

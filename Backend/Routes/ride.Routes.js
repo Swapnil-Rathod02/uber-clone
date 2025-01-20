@@ -1,8 +1,11 @@
 const express = require("express");
 const router = express.Router();
-const { check } = require("express-validator");
+const { check, query } = require("express-validator");
 const { isAuthenticated } = require("../Middleware/auth.Middleware");
-const { createRideController } = require("../Controller/ride.Controller");
+const {
+  createRideController,
+  getFaresController,
+} = require("../Controller/ride.Controller");
 
 router.post(
   "/create",
@@ -20,8 +23,24 @@ router.post(
   check("vehichleType")
     .isIn(["car", "auto", "bike"])
     .notEmpty()
-    .withMessage("invalid is vehichleType"),
+    .withMessage("invalid vehichleType"),
 
   createRideController
+);
+
+router.get(
+  "/get-fares",
+  query("pickup")
+    .isString()
+    .isLength({ min: 3 })
+    .notEmpty()
+    .withMessage("invalid is pickup"),
+  query("destination")
+    .isString()
+    .isLength({ min: 3 })
+    .notEmpty()
+    .withMessage("invalid is destination"),
+  isAuthenticated,
+  getFaresController
 );
 module.exports = router;

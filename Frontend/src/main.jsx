@@ -6,14 +6,18 @@ import { BrowserRouter } from "react-router-dom";
 import UserContex from "./Context/UserContext.jsx";
 import CaptainContexProvider from "./Context/CaptainContext.jsx";
 
+import RideProvider from "./Context/RideContex.jsx";
+
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <CaptainContexProvider>
-      <UserContex>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
-      </UserContex>
+      <RideProvider>
+        <UserContex>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </UserContex>
+      </RideProvider>
     </CaptainContexProvider>
   </StrictMode>
 );
