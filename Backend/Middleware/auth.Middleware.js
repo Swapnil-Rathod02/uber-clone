@@ -12,7 +12,9 @@ const isAuthenticated = async (req, res, next) => {
       return res.status(401).json({ msg: "Unauthorized" });
     }
     const userDatail = getTokenToInfo(token);
-
+    if (!userDatail.user) {
+      return res.status(401).json({ message: "unauthorized" });
+    }
     req.user = userDatail.user;
   } catch (error) {
     return res.status(401).json({ msg: "bad request" });
@@ -20,4 +22,25 @@ const isAuthenticated = async (req, res, next) => {
   return next();
 };
 
-module.exports = { isAuthenticated };
+const isAuthenticatedCaptain = async (req, res, next) => {
+  try {
+    const token =
+      req.cookies?.token || req.headers?.authorization?.split(" ")[1];
+
+    const blacklistedToken = await BlacklistedToken.findOne({ token: token });
+    if (!token || blacklistedToken) {
+      return res.status(401).json({ msg: "Unauthorized" });
+    }
+    const userDatail = getTokenToInfo(token);
+
+    if (!userDatail.captainUser) {
+      return res.status(401).json({ message: "unathorized user" });
+    }
+    req.user = userDatail.captainUser;
+  } catch (error) {
+    return res.status(401).json({ msg: "bad request" });
+  }
+  return next();
+};
+
+module.exports = { isAuthenticated, isAuthenticatedCaptain };

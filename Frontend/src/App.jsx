@@ -8,7 +8,6 @@ import HomeCaptain from "./Components/Captain/Home.Captain";
 import CaptainWrapper from "./Components/Captain/CaptainWrapper";
 import UserWrappper from "./Components/User/UserWrappper";
 import Booking from "./Components/Booking/Booking";
-import RideProvider from "./Context/RideContex";
 
 function App() {
   return (

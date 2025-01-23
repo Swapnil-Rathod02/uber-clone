@@ -1,102 +1,77 @@
 // Import Tailwind CSS in your React project
-import React from "react";
+import React, { useContext } from "react";
+import { FaLocationDot } from "react-icons/fa6";
+import { MdOutlineLocationOn } from "react-icons/md";
+import { RideContext } from "../../Context/RideContex";
 
-const DriverCard = ({ gotCab }) => {
+const DriverCard = ({ started }) => {
+  const { driver, rideData } = useContext(RideContext);
+  console.log(rideData);
+  console.log(rideData.ride.destination);
+  console.log(driver);
   return (
     <div
-      className={`max-w-sm mx-auto border rounded-lg shadow-md p-4 bg-white
-    ${gotCab ? "visible" : "hidden"}
-    `}
+      className={`p-2 w-full transition-all transform duration-500 before:0 scale-100 absolute bottom-0 bg-gray-100 
+  `}
     >
-      <div className="flex items-center mb-4">
+      <div className="w-full flex justify-between px-2 items-center">
         <img
-          src="https://tse1.mm.bing.net/th?id=OIP.JT5Uipq-bb6bf1VhYtRqNgHaEw&pid=Api&P=0&h=180" // Replace with the driver's image URL
-          alt="Driver"
-          className="w-12 h-12   rounded-full mr-4"
+          src="https://www.uber-assets.com/image/upload/f_auto,q_auto:eco/v1554506931/navigation/UberXL.png"
+          alt=""
+          className="size-20 object-cover"
         />
+        <div className="font-medium">
+          <h1 className="text-2xl font-medium">{driver.name}</h1>
+          <h2 className="text-lg">{driver.vehicleDetail.vehicleNumber}</h2>
+          <p className="">car name</p>
+          <p className="text-xl text-gray-700 font-medium">
+            {rideData.ride.otp}
+          </p>
+        </div>
+      </div>
+
+      {/* Header */}
+
+      {/* Pickup Address */}
+      <div className="m-4 flex gap-5  items-center ">
+        <MdOutlineLocationOn className="size-7 shrink-0" />
         <div>
-          <h1 className="text-lg font-bold">SANTH</h1>
-          <p className="text-sm text-gray-500">KA15AK00-0</p>
-          <p className="text-sm text-gray-500">White Suzuki S-Presso LXI</p>
-        </div>
-        <div className="ml-auto">
-          <span className="text-sm bg-yellow-400 text-black py-1 px-2 rounded-full">
-            ⭐ 4.9
-          </span>
+          <h2 className="text-md font-semibold text-gray-700">
+            Pickup Address
+          </h2>
+          <p className="text-gray-800 text-xl font-semibold">
+            {rideData.ride.pickup}
+          </p>
         </div>
       </div>
 
-      {/* Message Section */}
-      <div className="mb-4">
-        <input
-          type="text"
-          placeholder="Send a message..."
-          className="w-full border rounded-full px-4 py-2 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400"
-        />
+      {/* Drop Address */}
+      <div className="m-4 flex gap-5  items-center ">
+        <FaLocationDot className="size-6 shrink-0 " />
+        <div>
+          <h2 className="text-md font-semibold text-gray-700">
+            Drop-Off Address
+          </h2>
+          <p className="text-gray-800 text-xl font-semibold">
+            {rideData.ride.destination}
+          </p>
+        </div>
       </div>
 
-      {/* Action Buttons */}
-      <div className="flex justify-around mb-4">
-        <button className="flex flex-col items-center text-blue-500">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth="2"
-            stroke="currentColor"
-            className="w-6 h-6"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M12 4.5v15m7.5-7.5h-15"
-            />
-          </svg>
-          <span className="text-sm">Safety</span>
-        </button>
-
-        <button className="flex flex-col items-center text-blue-500">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth="2"
-            stroke="currentColor"
-            className="w-6 h-6"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M17 8l4 4m0 0l-4 4m4-4H3"
-            />
-          </svg>
-          <span className="text-sm">Share my trip</span>
-        </button>
-
-        <button className="flex flex-col items-center text-blue-500">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth="2"
-            stroke="currentColor"
-            className="w-6 h-6"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M15 12h2m4 0a2 2 0 00-2-2h-2.5a0.5 0.5 0 01-.5-.5V7m0 5.5v6"
-            />
-          </svg>
-          <span className="text-sm">Call driver</span>
-        </button>
+      {/* Price */}
+      <div className="flex items-center justify-between bg-gray-100 p-4 rounded-lg ">
+        <span className="text-xl font-bold text-gray-700 ">Price</span>
+        <span className="text-xl font-bold text-green-500">
+          ₹{rideData.ride.fare}
+        </span>
       </div>
-
-      {/* Address Section */}
-      <div className="text-gray-700">
-        <p className="text-sm font-semibold">562/11-A</p>
-        <p className="text-sm">Kaikondrahalli, Bengaluru, Karnataka</p>
-      </div>
+      <button
+        className={`bg-green-400 font-bold text-xl p-4 rounded-md w-full border-2 active:border-black/60 text-black/75 transition-all transform duration-200 ${
+          started ? "scale-100 opacity-100 " : "scale-0 opacity-0"
+        }`}
+      >
+        Make Payment
+      </button>
     </div>
   );
 };

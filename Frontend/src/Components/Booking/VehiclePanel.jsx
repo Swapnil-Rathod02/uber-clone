@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import DriverConfirm from "./FindingRide";
+import React from "react";
 
 const VehiclePanel = ({ createRide, setConfirm, cabDetails }) => {
   return (

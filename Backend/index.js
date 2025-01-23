@@ -1,24 +1,14 @@
-const express = require("express");
+const http = require("http");
 const dotenv = require("dotenv");
-const app = express();
-const cors = require("cors");
+// const { Server } = require("socket.io");
 dotenv.config();
 const port = process.env.PORT || 8080;
-const dbConnect = require("./Db/DbConnect");
-const userRouter = require("./Routes/user.Routes");
-const captainRouter = require("./Routes/captain.Routes");
-const mapRouter = require("./Routes/map.Routes");
-const rideRouter = require("./Routes/ride.Routes");
+const app = require("./server");
+const { socketInilization } = require("./socket");
+const server = http.createServer(app);
 
-dbConnect();
-app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+socketInilization(server);
 
-app.use("/user", userRouter);
-app.use("/captain", captainRouter);
-app.use("/maps", mapRouter);
-app.use("/rides", rideRouter);
-app.listen(port, () => {
-  console.log(`server started on number ${port}`);
+server.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
 });

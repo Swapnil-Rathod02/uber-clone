@@ -1,18 +1,22 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { SlClock } from "react-icons/sl";
 import { BsSpeedometer2 } from "react-icons/bs";
 import { BiSpreadsheet } from "react-icons/bi";
 import { RiArrowDownWideFill } from "react-icons/ri";
+import { CaptainContex } from "../../Context/CaptainContext";
 
-function CaptainPanel({ newRide, accept }) {
+function CaptainPanel({ newRide, accept, finished }) {
   const [focus, setFocus] = useState(false);
+  const { captain } = useContext(CaptainContex);
 
   return (
     <div
       className={`w-full mx-auto p-3 bg-white shadow-lg rounded-lg overflow-hidden absolute bottom-0 z-50 transform transition-all duration-500 origin-top ${
-        newRide ? "scale-0 opacity-0" : "scale-100 opacity-100"
+        newRide && accept && !finished
+          ? "scale-0 opacity-0"
+          : "scale-100 opacity-100"
       }
-    ${accept ? "scale-0 opacity-0" : "scale-100 opacity-100"}
+   
       `}
     >
       <RiArrowDownWideFill
@@ -27,12 +31,12 @@ function CaptainPanel({ newRide, accept }) {
             alt="Profile"
           />
           <div className="ml-4">
-            <h2 className="text-lg font-semibold">Jeremiah Curtis</h2>
+            <h2 className="text-lg font-semibold">{captain.name}</h2>
             <p className="text-sm text-gray-500">Basic Level</p>
           </div>
         </div>
         <div className="text-right">
-          <p className="text-xl font-bold text-gray-800">$325.00</p>
+          <p className="text-xl font-bold text-gray-800">325.00</p>
           <p className="text-sm text-gray-500">Earned</p>
         </div>
       </div>

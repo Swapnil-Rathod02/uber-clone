@@ -59,4 +59,8 @@ const captainProfileHandler = (req, res) => {
   res.status(200).json({ msg: "user data", captainUser: req.user });
 };
 
-module.exports = { registerHandler, loginHandler, captainProfileHandler };
+module.exports = {
+  registerHandler,
+  loginHandler,
+  captainProfileHandler,
+};

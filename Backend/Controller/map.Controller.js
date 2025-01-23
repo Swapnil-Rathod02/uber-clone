@@ -23,10 +23,12 @@ const mapsController = async (req, res) => {
 //time distance
 const getDistanceAndeTimeController = async (req, res) => {
   const errors = validationResult(req);
+
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
   }
   const { origin, destination } = req.query;
+
   try {
     const response = await getTimeAndDistance(origin, destination);
     return res.status(200).json({ response });

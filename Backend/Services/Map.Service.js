@@ -3,7 +3,6 @@ const { default: axios } = require("axios");
 const addressCoordinates = async (address) => {
   const api_key = process.env.GOOGLE_MAPS_API_KEY;
   const geocodeUrl = `https://maps.googleapis.com/maps/api/geocode/json`;
-
   try {
     const response = await axios.get(geocodeUrl, {
       params: {

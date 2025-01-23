@@ -1,11 +1,22 @@
-import React, { useCallback, useContext, useEffect, useState } from "react";
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { FaAngleDown } from "react-icons/fa6";
+import { ImLocation2 } from "react-icons/im";
 import VehicalType from "./VehicleType";
 import VehiclePanel from "./VehiclePanel";
 import axios from "axios";
 import getFarers from "../../Services/Fares.Services";
-import { RideContext } from "../../Context/RideContex";
 import FindingRide from "./FindingRide";
+import { RideContext } from "../../Context/RideContex";
+import { useSocket } from "../../Context/SocketContext";
+import { UserDataContext } from "../../Context/UserContext";
+import DriverCard from "./DriverCard";
+import Maps from "../../Services/Maps.Services";
 
 const Booking = () => {
   const [focus, setFocus] = useState(true);
@@ -19,8 +30,11 @@ const Booking = () => {
   const [vehichleType, setVehichleType] = useState("");
   const [focusOrigin, setFocusOrigin] = useState(true);
   const [fare, setFare] = useState({});
-
-  const { rideData, setRideData } = useContext(RideContext);
+  const [drop, setDrop] = useState(false);
+  const [started, setStarted] = useState(false);
+  const [rideAccepted, setRideAccepted] = useState(false);
+  const { setRideData, setDriver } = useContext(RideContext);
+  const { userData } = useContext(UserDataContext);
 
   const getLocations = (e) => {
     setTimeout(() => {
@@ -29,7 +43,6 @@ const Booking = () => {
   };
 
   const getSuggtions = useCallback(async () => {
-    console.log("called");
     try {
       const response = await axios.get(
         `${import.meta.env.VITE_BASE_URL}/maps/getsuggestions`,
@@ -49,7 +62,7 @@ const Booking = () => {
   }, [searching]);
 
   const Fares = useCallback(async () => {
-    if (origin && destination) {
+    if (origin && destination && drop) {
       const fares = await getFarers(origin, destination); //will get fare for each vehicle
       setFare(fares);
     }
@@ -77,23 +90,31 @@ const Booking = () => {
   useEffect(() => {
     getSuggtions();
     Fares();
-  }, [searching, getSuggtions, origin, destination]);
+  }, [getSuggtions, Fares, origin, destination]);
+
+  //initializing sockets
+  const socket = useSocket();
+  useEffect(() => {
+    socket.emit("join", { userType: "user", userId: userData._id });
+    socket.on("ride-confirmed", (data) => {
+      setDriver(data);
+      setRideAccepted(true);
+    });
+    socket.on("ride-started", (data) => {
+      setStarted(true);
+      console.log(data);
+    });
+  }, [socket, userData]);
 
   return (
     <>
-      <div className=" h-screen w-screen absolute top-0 overflow-hidden -z-50">
-        <img
-          className="h-full w-full -z-50"
-          src="https://www.researchgate.net/profile/Darren_Hayes2/publication/320839993/figure/download/fig3/AS:556713386676224@1509742222719/Map-in-Uber-application-tracking-user-in-a-Yellow-Cab.png"
-          alt=""
-          onClick={() => {
-            setCab(false);
-            setFocus(true);
-          }}
-        />
+      <div className=" h-screen w-screen absolute top-0 overflow-hidden -z-50 ">
+        <div className="h-full w-full -z-50">
+          <Maps />
+        </div>
       </div>
       <div
-        className={`  z-50 bg-white w-full  
+        className={` bg-gray-100 z-50 w-full  
         ${focus ? "absolute bottom-0  " : "relative "} ${
           cab ? "hidden" : "visible"
         }`}
@@ -111,28 +132,39 @@ const Booking = () => {
           <form action="" className="p-2 pb-0">
             <input
               type="text"
-              className="p-2 focus:border-none w-full placeholder:text-black/55 placeholder:text-xl text-xl font-medium items-center mb-8 bg-gray-500 rounded-md h-12"
-              // value={origin}
+              value={origin}
+              className="p-2 focus:border-none w-full placeholder:text-black/55 placeholder:text-xl text-xl font-medium items-center mb-6 bg-gray-500 rounded-md h-12"
               placeholder="Enter pickup location "
               onFocus={() => {
                 setFocus(false), setFocusOrigin(true);
               }}
-              onChange={(e) => getLocations(e)}
+              onChange={(e) => {
+                getLocations(e);
+                setOrigin(e.target.value);
+              }}
             />
 
             <input
               type="text"
+              value={destination}
+              onBlur={(e) => setDrop(true)}
+              onFocus={() => setDrop(false)}
               onClick={() => setFocusOrigin(false)}
-              // value={destination}
               className="p-2 h-12  rounded-md  text-xl placeholder:text-xl focus:border-none bg-gray-500 w-full placeholder:text-black/55 font-medium items-center"
               placeholder="choose destination "
-              onChange={(e) => getLocations(e)}
+              onChange={(e) => {
+                setDestination(e.target.value);
+                getLocations(e);
+              }}
             />
           </form>
         </div>
-        {suggestions.map((suggestion) => (
+        {suggestions.map((suggestion, index) => (
           <div
-            className={` p-2 rounded-b-md  ${focus ? "hidden" : "null"}`}
+            key={index}
+            className={` p-3  font-medium text-md rounded-b-md shadow-md flex gap-1 items-center active:bg-black/30 ${
+              focus ? "hidden" : "null"
+            }`}
             onClick={() => {
               focusOrigin
                 ? setOrigin(suggestion.description)
@@ -140,7 +172,10 @@ const Booking = () => {
               origin && destination ? setCab(true) : setCab(false);
             }}
           >
-            {suggestion.description}
+            <ImLocation2 className="size-6 shrink-0 text-gray-700" />
+            <div type="display" disabled className={"w-full"}>
+              {suggestion.description}
+            </div>
           </div>
         ))}
       </div>
@@ -170,9 +205,11 @@ const Booking = () => {
             destination,
             vehichleType,
             fare: fare[vehichleType],
+            rideAccepted,
           }}
         />
       )}
+      {rideAccepted && <DriverCard started={started} />}
     </>
   );
 };

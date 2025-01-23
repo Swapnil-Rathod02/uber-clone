@@ -4,12 +4,15 @@ const Captain = require("./Captain.Model");
 const RideSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
+    ref: "user",
     isrequired: true,
   },
-  Captain: {
+  captain: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Captain",
+    ref: "captainuser",
+  },
+  vehichleType: {
+    type: String,
   },
   pickup: {
     isrequired: true,

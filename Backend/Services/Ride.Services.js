@@ -1,3 +1,4 @@
+const Captain = require("../Model/Captain.Model");
 const Ride = require("../Model/Ride.Model");
 const { getTimeAndDistance } = require("./Map.Service");
 const crypto = require("crypto");
@@ -18,9 +19,9 @@ const vehicleFare = async (pickup, destination) => {
 
   const distance = Number(timeDistance.distance.split(" ")[0]);
   const fares = {
-    car: calculateFare(distance, fareRates.car),
-    auto: calculateFare(distance, fareRates.auto),
-    bike: calculateFare(distance, fareRates.bike),
+    car: Math.round(calculateFare(distance, fareRates.car)),
+    auto: Math.round(calculateFare(distance, fareRates.auto)),
+    bike: Math.round(calculateFare(distance, fareRates.bike)),
   };
 
   return fares;
@@ -49,6 +50,7 @@ const createRide = async ({ user, pickup, destination, vehichleType }) => {
       pickup,
       destination,
       otp: generateOtp(4),
+      vehichleType: vehichleType,
       fare: fare[vehichleType],
     });
 
@@ -58,4 +60,20 @@ const createRide = async ({ user, pickup, destination, vehichleType }) => {
     throw new Error(error.message);
   }
 };
-module.exports = { createRide, vehicleFare };
+
+const getCaptainsInRadius = async (lat, lng, radius = 30) => {
+  try {
+    const captains = await Captain.find({
+      location: {
+        $geoWithin: {
+          $centerSphere: [[lat, lng], radius / 6378.1], // Convert radius to radians
+        },
+      },
+    });
+
+    return captains;
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+module.exports = { createRide, vehicleFare, getCaptainsInRadius };

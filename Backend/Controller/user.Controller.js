@@ -65,7 +65,7 @@ async function logInHandle(req, res) {
 
 //profileHandler
 const profileHandler = (req, res) => {
-  return res.status(200).json({ msg: "successful" });
+  return res.status(200).json({ msg: "successful", user: req.user });
 };
 
 //logout //used for both user controller and captain controller as well

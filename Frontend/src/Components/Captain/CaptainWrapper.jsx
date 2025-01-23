@@ -5,31 +5,32 @@ import { CaptainContex } from "../../Context/CaptainContext";
 
 function CaptainWrapper({ children }) {
   const navigate = useNavigate();
-  const { captain, setCaptain } = useContext(CaptainContex);
+  const { setCaptain } = useContext(CaptainContex);
   const token = localStorage.getItem("token");
-  const isCaptain = async () => {
-    if (token) {
-      const response = await axios.get(
-        `${import.meta.env.VITE_BASE_URL}/captain/profile`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+  const isCaptain = useCallback(async () => {
+    try {
+      if (token) {
+        const response = await axios.get(
+          `${import.meta.env.VITE_BASE_URL}/captain/profile`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        if (response.status == 200 && response.data.captainUser) {
+          setCaptain(response.data.captainUser);
         }
-      );
-      if (response.status == 200) {
-        console.log(response);
-        setCaptain(response.data.captainUser);
-        return true;
       }
-      return false;
+    } catch (error) {
+      if (error.status == 401) {
+        navigate("/captainlogin");
+      }
     }
-    return false;
-  };
+  }, [token, setCaptain]);
+
   useEffect(() => {
-    if (!token || !isCaptain()) {
-      navigate("/captainlogin");
-    }
+    isCaptain();
   }, [token]);
   return <>{children}</>;
 }

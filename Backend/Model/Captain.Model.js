@@ -37,8 +37,16 @@ const captainSchema = new mongoose.Schema({
     enum: ["active", "inactive"],
     default: "inactive",
   },
+  location: {
+    lat: {
+      type: Number,
+    },
+    lng: {
+      type: Number,
+    },
+  },
   socketId: { type: String },
 });
 
-const Captain = mongoose.model("CaptainUser", captainSchema);
+const Captain = mongoose.model("captainuser", captainSchema);
 module.exports = Captain;

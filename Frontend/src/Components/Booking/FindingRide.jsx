@@ -4,7 +4,11 @@ const FindingRide = ({ cabDetails }) => {
   return (
     <>
       <div
-        className={`z-50 text-black w-full p-3 bg-white shadow-lg rounded-t-sm absolute bottom-0 space-y-3`}
+        className={`z-50 text-black w-full p-3 bg-white shadow-lg rounded-t-sm absolute bottom-0 space-y-3 transform transition-all duration-200 ${
+          cabDetails.rideAccepted
+            ? "scale-0 opacity-0"
+            : "scale-100 opacity-100"
+        }`}
       >
         <h1 className="text-gray-800 text-2xl font-bold  text-center mt-2">
           {" "}
