@@ -82,9 +82,6 @@ const HomeCaptain = () => {
             >
               {online ? "Searching Ride For You!" : "You Are Offline"}
             </h1>
-            <p className="text-md font-medium">
-              {online ? "searching..." : "Go Online to get jobs"}
-            </p>
           </div>
         </div>
       </header>

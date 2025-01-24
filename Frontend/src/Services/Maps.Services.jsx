@@ -53,9 +53,25 @@ const Maps = () => {
         mapContainerStyle={containerStyle}
         center={currentLocation}
         zoom={15}
+        options={{
+          mapTypeControl: false, // Hides Map/Satellite toggle
+          fullscreenControl: false, // Hides fullscreen control
+          streetViewControl: false,
+          zoomControl: true, // Hides Street View pegman
+        }}
       >
         {/* Example marker */}
-        <Marker position={currentLocation} />
+        <Marker
+          position={currentLocation}
+          icon={{
+            // Use a circular symbol
+            scale: 8, // Adjust size
+            fillColor: "#4285F4", // Google Maps blue color
+            fillOpacity: 1,
+            strokeColor: "#ffffff",
+            strokeWeight: 2,
+          }}
+        />
       </GoogleMap>
     </LoadScript>
   );

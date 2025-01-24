@@ -83,7 +83,7 @@ const VehicalType = ({ fare, setChooseVehicle, setVehichleType }) => {
         >
           <div className="flex items-center gap-1">
             <img
-              src="https://tse2.mm.bing.net/th?id=OIP.2HqnxwGIwExWdFSRNTxX-gHaHv&pid=Api&P=0&h=180"
+              src="https://tse3.mm.bing.net/th?id=OIP.d8sjRxRwAEeRsKreP3uuNgHaHa&pid=Api&P=0&h=180"
               alt=""
               className="size-20 object-cover mr-4 bg-cover inset-0 bg-opacity-50"
             />
